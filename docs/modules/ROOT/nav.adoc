@@ -1,3 +1,0 @@
-* xref:index.adoc[Overview]
-* xref:morse.adoc[Morse code notifier]
-* xref:exfiltrate.adoc[Notification exfiltrator]
