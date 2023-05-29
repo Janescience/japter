@@ -12,24 +12,24 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
+        setContentView(R.layout.settings_activity);
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.settings, SettingsFragment())
                 .commit()
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
-            this.findPreference<Preference>("noti_recent")
+            this.findPreference<Preference>("history")
                 ?.setOnPreferenceClickListener(fun(it: Preference): Boolean {
                     val html = StringBuilder()
-                    html.append("Message history<ul>")
-                    for (item in (it.sharedPreferences.getString("noti_recent", "-") ?: "").split("\n")) {
+                    html.append("Notifications Message History<ul>")
+                    for (item in (it.sharedPreferences.getString("history", "-") ?: "").split("\n")) {
                         html.append("<li><code>").append(item.htmlEncode()).append("</code></li>")
                     }
                     html.append("</ul>")
@@ -38,10 +38,10 @@ class SettingsActivity : AppCompatActivity() {
                 })
 
 
-            this.findPreference<Preference>("exfiltrate_inspect")
+            this.findPreference<Preference>("eftSumStatus")
                 ?.setOnPreferenceClickListener(fun(it: Preference): Boolean {
                     val workManager = WorkManager.getInstance(this.requireContext())
-                    val workInfos = workManager.getWorkInfosByTag("exfiltrate").get()
+                    val workInfos = workManager.getWorkInfosByTag("eft").get()
                     var enqueued = 0
                     var failed = 0
                     var running = 0
@@ -57,26 +57,26 @@ class SettingsActivity : AppCompatActivity() {
                         }
                     }
                     val html = StringBuilder()
-                    html.append("enqueued = $enqueued<br>")
-                    html.append("failed = $failed<br>")
-                    html.append("running = $running<br>")
-                    html.append("succeeded = $succeeded<br>")
-                    html.append("others = $others<br>")
+                    html.append("Enqueued = $enqueued<br>")
+                    html.append("Failed = $failed<br>")
+                    html.append("Running = $running<br>")
+                    html.append("Succeeded = $succeeded<br>")
+                    html.append("Others = $others<br>")
                     WebViewActivity.show(this.requireContext(), html.toString())
                     return true
                 })
 
-            this.findPreference<Preference>("exfiltrate_cancel")
+            this.findPreference<Preference>("eftQueueCancel")
                 ?.setOnPreferenceClickListener(fun(it: Preference): Boolean {
                     val workManager = WorkManager.getInstance(this.requireContext())
-                    val workInfos = workManager.getWorkInfosByTag("exfiltrate").get()
+                    val workInfos = workManager.getWorkInfosByTag("eft").get()
                     val html = StringBuilder()
-                    html.append("Work infos canceled<ul>")
+                    html.append("Canceled<ul>")
                     for (item in workInfos) {
                         html.append("<li><code>").append(item.id.toString().htmlEncode()).append("</code></li>")
                     }
                     html.append("</ul>")
-                    workManager.cancelAllWorkByTag("exfiltrate").result.get()
+                    workManager.cancelAllWorkByTag("eft").result.get()
                     workManager.pruneWork().result.get()
                     WebViewActivity.show(this.requireContext(), html.toString())
                     return true
