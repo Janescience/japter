@@ -30,7 +30,9 @@ class SettingsActivity : AppCompatActivity() {
                     val html = StringBuilder()
                     html.append("Notifications Message History<ul>")
                     for (item in (it.sharedPreferences.getString("history", "-") ?: "").split("\n")) {
-                        html.append("<li><code>").append(item.htmlEncode()).append("</code></li>")
+                        if(item.htmlEncode() != ""){
+                            html.append("<li><code>").append(item.htmlEncode()).append("</code></li>")
+                        }
                     }
                     html.append("</ul>")
                     WebViewActivity.show(this.requireContext(), html.toString())
