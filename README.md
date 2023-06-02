@@ -16,4 +16,4 @@
 
 ## Working Flow
 
-**Received notification data** -> **Filter with setting** -> **Endcoded data by Sealer** -> **Send data to API** -> **Check response code** -> **Retry send data if error until success**
+**Received notification data** -> **Filter with setting** -> **Encoded data by Sealer** -> **Send data to API** -> **Check response code** -> **Retry send data if error until success**
