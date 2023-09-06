@@ -1,6 +1,7 @@
-package japter.tool
+package japter.tool.service
 
 import android.content.Context
+import japter.tool.model.NotificationData
 
 interface NotificationProcessor {
     fun getName(): String

@@ -1,4 +1,4 @@
-package japter.tool
+package japter.tool.activity
 
 import android.content.Context
 import android.content.Intent

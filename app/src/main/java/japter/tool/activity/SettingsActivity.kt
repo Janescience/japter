@@ -1,4 +1,4 @@
-package japter.tool
+package japter.tool.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import japter.tool.R
 
 class SettingsActivity : AppCompatActivity() {
 

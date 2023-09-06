@@ -1,4 +1,4 @@
-package japter.tool
+package japter.tool.util
 
 import com.goterl.lazysodium.SodiumAndroid
 import com.goterl.lazysodium.LazySodiumAndroid

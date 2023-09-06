@@ -1,4 +1,4 @@
-package japter.tool
+package japter.tool.model
 
 import kotlinx.serialization.Serializable
 import java.time.ZoneOffset

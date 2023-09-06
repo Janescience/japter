@@ -1,4 +1,4 @@
-package japter.tool
+package japter.tool.service.impl
 
 import android.app.Notification
 import android.content.Context
@@ -6,6 +6,8 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.preference.PreferenceManager
+import japter.tool.model.NotificationData
+import japter.tool.service.NotificationProcessor
 
 class NotificationListener : NotificationListenerService() {
     override fun onNotificationPosted(statusBarNotification: StatusBarNotification) {
@@ -16,6 +18,7 @@ class NotificationListener : NotificationListenerService() {
 
         val notificationData = NotificationData(packageName, title, text)
 
+        //Skip all notification in blocklist
         val blocklist = NotificationBlocklist("blocklist")
         val pattern = blocklist.getBlockingPattern(notificationData, this)
         if (pattern != null) {
@@ -43,7 +46,7 @@ class NotificationListener : NotificationListenerService() {
     private fun log(text: String) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val recent = (sharedPreferences.getString("history", "") ?: "").split("\n")
-        val out = recent.takeLast(8).joinToString("\n") + "\n$text"
+        val out = recent.joinToString("\n") + "\n$text"
         Log.d("Japter/NotificationListener", text)
         sharedPreferences.edit().putString("history", out).commit()
     }
